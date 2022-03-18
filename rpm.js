@@ -16,7 +16,7 @@ const BUILD_URL = process.env.BUILD_URL || "BUILD_URL";
 const JOB_URL = process.env.JOB_URL || "JOB_URL";
 
 const description = `
-  Jenkins job '${JOB_NAME}' (${JOB_URL}) created build number '${BUILD_NUMBER}' and build id '${BUILD_ID}'.
+  Jenkins job '${JOB_NAME}' (${JOB_URL}) created build number '${BUILD_NUMBER}' with id '${BUILD_ID}'.
   Workspace: ${WORKSPACE}.
   If you want to check build, please go to ${BUILD_URL}.
 `;
