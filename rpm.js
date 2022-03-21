@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
+const buildRpm = require("rpm-builder");
 const { promisify } = require("util");
 
-const buildRpm = require("rpm-builder");
 const readDir = promisify(fs.readdir);
 const buildRpmPromisifide = promisify(buildRpm);
 
@@ -16,7 +16,8 @@ const BUILD_URL = process.env.BUILD_URL || "BUILD_URL";
 const JOB_URL = process.env.JOB_URL || "JOB_URL";
 
 const description = `
-  Jenkins job '${JOB_NAME}' (${JOB_URL}) created build number '${BUILD_NUMBER}' with id '${BUILD_ID}'.
+  Jenkins job '${JOB_NAME}' (${JOB_URL}).
+  Build number '${BUILD_NUMBER}' with id '${BUILD_ID}'.
   Workspace: ${WORKSPACE}.
   If you want to check build, please go to ${BUILD_URL}.
 `;
@@ -29,7 +30,7 @@ readDir(pathToBuild)
       dest: "/dist/",
     }));
   })
-  .then((files) => {
+  .then((paths) => {
     const options = {
       name: "fix-mgnt",
       version: "1.0.0",
@@ -38,9 +39,10 @@ readDir(pathToBuild)
       release: "1",
       buildArch: "x86_64",
       epoch: Math.floor(new Date().getTime() / 1000),
-      group: "Refinitiv",
+      group: "LSEG-Refinitiv",
+      license: "Refinitiv",
       keepTemp: true,
-      files,
+      files: paths,
     };
     return options;
   })
